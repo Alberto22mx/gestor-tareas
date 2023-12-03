@@ -9,7 +9,7 @@
                         <h1>ADMINISTRACION DE USUARIOS</h1>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-dark" (click)="openDialog()">CREAR USUARIO</button>
+                        <button type="button" class="btn btn-dark" (click)="openDialog(1)">CREAR USUARIO</button>
                     </div>
                 </div>
             </mat-card-title>
@@ -41,8 +41,8 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
                 <td mat-cell *matCellDef="let row"> 
                     <div class="actions">
-                        <mat-icon matTooltip="Editar" (click)="updateUsers(row.id)">edit</mat-icon>
-                        <mat-icon matTooltip="Eliminar" (click)="deleteUsers(row.id)">delete</mat-icon>
+                        <mat-icon matTooltip="Editar" (click)="openDialog(2, row)">edit</mat-icon>
+                        <mat-icon mat-raised-button matTooltip="Eliminar" (click)="advertencia('0ms', '0ms', row)">delete</mat-icon>
                     </div>
                 </td>
             </ng-container>

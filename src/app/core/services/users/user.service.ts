@@ -17,4 +17,16 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.CORE_URL + 'usuario');
   }
+
+  postUser(usuario: User): Observable<User> {
+    return this.http.post<User>(this.CORE_URL + 'usuario', usuario);
+  }
+
+  putUser(usuario: User): Observable<User> {
+    return this.http.put<User>(this.CORE_URL + 'usuario', usuario);
+  }
+
+  deleteUser(id: number): Observable<User> {
+    return this.http.delete<User>(this.CORE_URL + 'usuario/' + id);
+  }
 }

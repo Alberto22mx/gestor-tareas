@@ -1,1 +1,17 @@
-<p>validations works!</p>
+
+
+@if (this.results.alerta.usuario) {
+  <h1 mat-dialog-title>Eliminar Usuario</h1>
+  <div mat-dialog-content>
+      ¿Quieres eliminar el usuario <b>{{this.results.alerta.usuario}}</b>?
+  </div>
+} @else {
+  <h1 mat-dialog-title>Eliminar Tarea</h1>
+  <div mat-dialog-content>
+      ¿Quieres eliminar la tarea <b>{{this.results.alerta.titulo}}</b>?
+  </div>
+}
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button cdkFocusInitial (click)="guardar()">Eliminar</button>
+</div>

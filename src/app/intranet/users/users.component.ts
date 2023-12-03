@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MenuComponent } from '../../public/theme/general/menu/menu.component';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { User } from '../../core/models/users/user';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersModalComponent } from '../modals/users-modal/users-modal.component';
+import { ValidationsComponent } from '../modals/validations/validations.component';
 
 @Component({
   selector: 'app-users',
@@ -27,7 +28,7 @@ import { UsersModalComponent } from '../modals/users-modal/users-modal.component
 export class UsersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'usuario', 'nombre', 'acciones'];
   dataSource!: MatTableDataSource<User>;
-  dataReturn: any;
+  dataResult: any | undefined;
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ts-ignore
@@ -50,22 +51,54 @@ export class UsersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openDialog(): void {
+  openDialog(tipo: number, usuario: any = 0): void {
     const dialogRef = this.dialog.open(UsersModalComponent, {
-      data: {name: "test"},
+      width: '500px',
+      data: {tipo, usuario},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataReturn = result;
+      this.dataResult = result;
+      if(this.dataResult !== undefined && this.dataResult.tipo == 1) {
+        this.createUser(this.dataResult.usuario);
+      } else if(this.dataResult !== undefined) {
+        this.updateUser(this.dataResult.usuario);
+      }
     });
   }
 
-  updateUsers(id: number) {
+  createUser(usuario: User) {
+    this.userService.postUser(usuario).subscribe(users => {
+      this.getUsers();
+    });
+  }
 
+  updateUser(usuario: User) {
+    this.userService.putUser(usuario).subscribe(users => {
+      this.getUsers();
+    });
   }
 
   deleteUsers(id: number) {
+    this.userService.deleteUser(id).subscribe(users => {
+      this.getUsers();
+    });
+  }
 
+  advertencia(enterAnimationDuration: string, exitAnimationDuration: string, usuario: User): void {
+    const dialogRef = this.dialog.open(ValidationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {alerta: usuario},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.guardar) {
+        this.deleteUsers(result.id)
+      }
+    });
   }
 
   ngAfterViewInit() {

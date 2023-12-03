@@ -1,33 +1,49 @@
 <h2>{{titutlo}}</h2>
-
-<form [formGroup]="cliente">
-  <div>
+<form [formGroup]="usuario">
+  <div class="ajustar">
     <mat-form-field>
-      <input matInput type="text" formControlName="nombre" placeholder="NOMBRE">
-      <mat-error *ngIf="cliente.controls.nombre.hasError('required')">
+      <mat-label>Usuario</mat-label>
+      <input matInput type="text" formControlName="usuario" placeholder="Usuario">
+      <mat-error *ngIf="usuario.controls['usuario'].hasError('pattern')">
         Se requiere llenar el campo
       </mat-error>
-      <mat-error *ngIf="cliente.controls.nombre.hasError('pattern')">
-        Es un nombre inválido
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Contraseña">
+      <mat-error *ngIf="usuario.controls['password'].hasError('required')">
+        Se requiere llenar el campo
       </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" formControlName="correo" placeholder="CORREO">
-      <mat-error *ngIf="cliente.controls.correo.hasError('required')">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="nombre" placeholder="Nombre">
+      <mat-error *ngIf="usuario.controls['nombre'].hasError('pattern')">
         Se requiere llenar el campo
       </mat-error>
-      <mat-error *ngIf="cliente.controls.correo.hasError('pattern')">
-        Es un nombre inválido
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Apellido Paterno</mat-label>
+      <input matInput type="text" formControlName="apellidoPaterno" placeholder="Apellido Paterno">
+      <mat-error *ngIf="usuario.controls['apellidoPaterno'].hasError('required')">
+        Se requiere llenar el campo
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Apellido Materno</mat-label>
+      <input matInput type="text" formControlName="apellidoMaterno" placeholder="Apellido Materno">
+      <mat-error *ngIf="usuario.controls['apellidoMaterno'].hasError('required')">
+        Se requiere llenar el campo
       </mat-error>
     </mat-form-field>
   </div>
 </form>
 <div class="acciones">
   <div>
-    <button mat-raised-button (click)="cerrar()">CANCELAR</button>
+    <button class="btn btn-dark" (click)="cerrar()">CANCELAR</button>
   </div>
   <div>
-    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="!cliente.valid">GUARDAR</button>
+    <button class="btn btn-dark" color="primary" (click)="guardar()" [disabled]="!usuario.valid">GUARDAR</button>
   </div>
 </div>

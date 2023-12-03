@@ -1,26 +1,31 @@
 <h2>{{titutlo}}</h2>
 
-<form [formGroup]="cliente">
-  <div>
+<form [formGroup]="tarea">
+  <div class="ajustar">
     <mat-form-field>
-      <input matInput type="text" formControlName="nombre" placeholder="NOMBRE">
-      <mat-error *ngIf="cliente.controls.nombre.hasError('required')">
+      <mat-label>Titulo de la Tarea</mat-label>
+      <input matInput type="text" formControlName="titulo" placeholder="Titulo">
+      <mat-error *ngIf="tarea.controls['titulo'].hasError('pattern')">
         Se requiere llenar el campo
       </mat-error>
-      <mat-error *ngIf="cliente.controls.nombre.hasError('pattern')">
-        Es un nombre inválido
-      </mat-error>
     </mat-form-field>
-
     <mat-form-field>
-      <input matInput type="text" formControlName="correo" placeholder="CORREO">
-      <mat-error *ngIf="cliente.controls.correo.hasError('required')">
+      <mat-label>Descripcion de la Tarea</mat-label>
+      <input matInput type="text" formControlName="descripcion" placeholder="Descripcion">
+      <mat-error *ngIf="tarea.controls['descripcion'].hasError('pattern')">
         Se requiere llenar el campo
       </mat-error>
-      <mat-error *ngIf="cliente.controls.correo.hasError('pattern')">
-        Es un nombre inválido
-      </mat-error>
     </mat-form-field>
+    <div>
+      <mat-form-field>
+        <mat-label>Estado de la Tarea</mat-label>
+        <mat-select formControlName="estado">
+          @for (estado of estados; track estado) {
+            <mat-option [value]="estado.value">{{estado.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 </form>
 <div class="acciones">
@@ -28,6 +33,6 @@
     <button mat-raised-button (click)="cerrar()">CANCELAR</button>
   </div>
   <div>
-    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="!cliente.valid">GUARDAR</button>
+    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="!tarea.valid">GUARDAR</button>
   </div>
 </div>

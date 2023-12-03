@@ -12,6 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { Task } from '../../core/models/tasks/task';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { ValidationsComponent } from '../modals/validations/validations.component';
+import { MatDialog } from '@angular/material/dialog';
+import { TasksModalComponent } from '../modals/tasks-modal/tasks-modal.component';
 
 @Component({
   selector: 'app-tasks',
@@ -33,6 +36,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
   
   constructor(
     private taskService: TaskService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -47,12 +51,53 @@ export class TasksComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateTask(id: number) {
+  openDialog(tipo: number, tarea: any = 0): void {
+    const dialogRef = this.dialog.open(TasksModalComponent, {
+      width: '500px',
+      data: {tipo, tarea},
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined && result.tipo == 1) {
+        this.createTask(result.tarea);
+      } else if(result !== undefined) {
+        this.updateTask(result.tarea);
+      }
+    });
+  }
+
+  createTask(task: Task) {
+    this.taskService.postTasks(task).subscribe(task => {
+      this.getTasks();
+    });
+  }
+
+  updateTask(task: Task) {
+    this.taskService.postTasks(task).subscribe(task => {
+      this.getTasks();
+    });
   }
 
   deleteTask(id: number) {
+    this.taskService.deleteTasks(id).subscribe(task => {
+      this.getTasks();
+    });
+  }
 
+  advertencia(enterAnimationDuration: string, exitAnimationDuration: string, task: Task): void {
+    const dialogRef = this.dialog.open(ValidationsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {alerta: task},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.guardar) {
+        this.deleteTask(result.id)
+      }
+    });
   }
 
   ngAfterViewInit() {
