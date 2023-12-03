@@ -1,0 +1,33 @@
+<h2>{{titutlo}}</h2>
+
+<form [formGroup]="cliente">
+  <div>
+    <mat-form-field>
+      <input matInput type="text" formControlName="nombre" placeholder="NOMBRE">
+      <mat-error *ngIf="cliente.controls.nombre.hasError('required')">
+        Se requiere llenar el campo
+      </mat-error>
+      <mat-error *ngIf="cliente.controls.nombre.hasError('pattern')">
+        Es un nombre inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="correo" placeholder="CORREO">
+      <mat-error *ngIf="cliente.controls.correo.hasError('required')">
+        Se requiere llenar el campo
+      </mat-error>
+      <mat-error *ngIf="cliente.controls.correo.hasError('pattern')">
+        Es un nombre inválido
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
+<div class="acciones">
+  <div>
+    <button mat-raised-button (click)="cerrar()">CANCELAR</button>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="guardar()" [disabled]="!cliente.valid">GUARDAR</button>
+  </div>
+</div>
