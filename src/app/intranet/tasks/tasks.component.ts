@@ -93,7 +93,6 @@ export class TasksComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.guardar) {
         this.deleteTask(result.id)
       }

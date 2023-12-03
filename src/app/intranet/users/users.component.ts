@@ -94,7 +94,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.guardar) {
         this.deleteUsers(result.id)
       }

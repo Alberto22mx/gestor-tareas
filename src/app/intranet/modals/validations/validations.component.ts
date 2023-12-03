@@ -24,7 +24,6 @@ export class ValidationsComponent {
     public dialogRef: MatDialogRef<ValidationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    console.log(data);
     this.results = data;
   }
   cerrar() {
